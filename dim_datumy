@@ -1,0 +1,37 @@
+dim_datumy = 
+ADDCOLUMNS(
+ADDCOLUMNS(
+ADDCOLUMNS(
+SELECTCOLUMNS(
+CALENDARAUTO(),
+"datum",[Date]),
+"den_tydne",WEEKDAY([datum],2),
+"vikend",IF(WEEKDAY([datum],2)>5,TRUE(),FALSE),
+"rok",YEAR([datum]),
+"mesic",MONTH([datum]),
+"den", DAY([datum])),
+"statni_svatek",
+SWITCH(
+    TRUE(),
+DAY([datum]) = 1 && MONTH([datum]) = 1,TRUE(),
+DAY([datum]) = 1 && MONTH([datum]) = 5,TRUE(),
+DAY([datum]) = 8 && MONTH([datum]) = 5,TRUE(),
+DAY([datum]) = 5 && MONTH([datum]) = 7,TRUE(),
+DAY([datum]) = 6 && MONTH([datum]) = 7,TRUE(),
+DAY([datum]) = 28 && MONTH([datum]) = 9,TRUE(),
+DAY([datum]) = 28 && MONTH([datum]) = 10,TRUE(),
+DAY([datum]) = 17 && MONTH([datum]) = 11,TRUE(),
+DAY([datum]) = 24 && MONTH([datum]) = 12,TRUE(),
+DAY([datum]) = 25 && MONTH([datum]) = 12,TRUE(),
+DAY([datum]) = 26 && MONTH([datum]) = 12,TRUE(),
+[datum] IN
+{
+DATE(2025,04,18),
+DATE(2025,04,21),
+DATE(2024,04,01)
+
+},FALSE())
+
+),
+"pracovni_den",
+IF([den_tydne]<6 && [statni_svatek] = FALSE(),1,0))
