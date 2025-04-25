@@ -1,9 +1,14 @@
 dim_datumy = 
+-- krok 4: Výpočet pracovních dnů
 ADDCOLUMNS(
 ADDCOLUMNS(
+// ==========  TABULKA 1 ============
+--krok3: Dopočtení sloupců datum,den_tydne,vikend,rok,mesic,den_statni_stavtek
 ADDCOLUMNS(
-SELECTCOLUMNS(
-CALENDARAUTO(),
+    --krok2: Přejmenování sloupce date
+    SELECTCOLUMNS(
+    --krok1: Tabulka kalendářních datumů
+        CALENDARAUTO(),
 "datum",[Date]),
 "den_tydne",WEEKDAY([datum],2),
 "vikend",IF(WEEKDAY([datum],2)>5,TRUE(),FALSE),
@@ -30,7 +35,8 @@ DATE(2025,04,18),
 DATE(2025,04,21),
 DATE(2024,04,01)
 
-},FALSE())
+},TRUE(),FALSE())
+// ==========  TABULKA 1 ============
 
 ),
 "pracovni_den",
